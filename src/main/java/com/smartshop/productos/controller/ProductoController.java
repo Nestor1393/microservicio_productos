@@ -140,6 +140,7 @@ public class ProductoController {
     // {
     //  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzUwMjEyNTg4LCJleHAiOjE3NTAyNDg1ODh9.hNB131F4k_aSz8OHLonFSjh4rTjgwkj8ebUi4QTxFqs"
     //}
+
     @GetMapping("/{idProducto}/detalle")
     @SecurityRequirement(name = "BearerAuth") // Indica que este endpoint requiere el esquema BearerAuth
     @Operation(
@@ -155,6 +156,8 @@ public class ProductoController {
     ) {
         // Este será el 'subject' que pusiste al generar el token
         Long usuarioId = Long.parseLong(userDetails.getUsername());
+
+        System.out.println("ELIMINAR");
 
         log.info("GET /api/v1/productos/{idProducto}/detalle idProducto={}, usuarioId={}, pagina={}, tamanio={}",idProducto, usuarioId, pagina, tamanio );
 
