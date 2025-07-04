@@ -27,7 +27,9 @@ public class SecurityConfig {
 
                 // Configura qué rutas están permitidas sin autenticación
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/**").permitAll()
+                        //.requestMatchers("/api/v1/productos/**").permitAll()
+
                         //.requestMatchers("/api/v1/productos", "/api/v1/productos/**").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**", // Swagger JSON

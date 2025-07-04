@@ -1,5 +1,6 @@
 package com.smartshop.productos.security;
 
+import com.smartshop.productos.security.annotations.RequiresAuth;
 import com.smartshop.productos.security.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,8 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.io.IOException;
+import java.util.List;
 
 // Este filtro se ejecuta una vez por cada request HTTP
 @Component
@@ -21,11 +27,39 @@ import java.io.IOException;
 public class    JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    //private final HandlerMapping handlerMapping;
+    private final RequestMappingHandlerMapping handlerMapping;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+
+        HandlerExecutionChain handler;
+        try {
+            handler = handlerMapping.getHandler(request);
+        } catch (Exception e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (handler == null || !(handler.getHandler() instanceof HandlerMethod handlerMethod)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        boolean requiresAuth =
+                handlerMethod.hasMethodAnnotation(RequiresAuth.class) ||
+                        handlerMethod.getBeanType().isAnnotationPresent(RequiresAuth.class);
+
+        if (!requiresAuth) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
 
         // Obtener el valor del header "Authorization"
         final String authHeader = request.getHeader("Authorization");

@@ -134,6 +134,10 @@
 			<optional>true</optional> <!-- Evita que se empaquete en producción -->
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 
 	</dependencies>
 
