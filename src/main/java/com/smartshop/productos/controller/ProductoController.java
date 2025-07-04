@@ -186,6 +186,7 @@ public class ProductoController {
     @PostMapping("/{id}/etiquetas/ia")
     public ResponseEntity<List<String>> generarEtiquetasIA(@PathVariable Long id) {
         List<String> etiquetas = productoService.generarEtiquetasAutomaticas(id);
+        System.out.println("Etiquetas fallido");
         return ResponseEntity.ok(etiquetas);
     }
 
