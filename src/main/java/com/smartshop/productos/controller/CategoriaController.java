@@ -2,7 +2,6 @@ package com.smartshop.productos.controller;
 
 import com.smartshop.productos.dto.CategoriaDTO;
 import com.smartshop.productos.service.CategoriaService;
-import com.smartshop.productos.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
